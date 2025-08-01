@@ -81,9 +81,9 @@
             // pictureBox4
             // 
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(1002, 3);
+            pictureBox4.Location = new Point(989, 12);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(63, 54);
+            pictureBox4.Size = new Size(63, 45);
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 6;
             pictureBox4.TabStop = false;

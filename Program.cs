@@ -1,3 +1,5 @@
+using Proyecto_Taquilla.Vistas;
+
 namespace Prototipo_Taquilla_Cliente
 {
     internal static class Program
@@ -11,7 +13,7 @@ namespace Prototipo_Taquilla_Cliente
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new vistaMDIGeneral());
+            Application.Run(new vistaLogin());
         }
     }
 }

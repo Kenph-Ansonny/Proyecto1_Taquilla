@@ -43,8 +43,8 @@ namespace Prototipo_Taquilla_Cliente
             if (resultado == DialogResult.Yes)
             {
                 //regresa al login
-                vistaLogin login = new vistaLogin();
-                login.Show();
+                vistaLogin ventanaLogin = new vistaLogin();
+                ventanaLogin.Show();
                 this.Close();
             }
         }
