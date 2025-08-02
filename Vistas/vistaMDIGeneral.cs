@@ -98,5 +98,11 @@ namespace Prototipo_Taquilla_Cliente
             vistaBitacora ventanaBitacora = new vistaBitacora();
             ventanaBitacora.Show();
         }
+
+        private void btnFuncion_Click(object sender, EventArgs e)
+        {
+            vistaFuncion ventanaFuncion = new vistaFuncion();
+            ventanaFuncion.Show();
+        }
     }
 }

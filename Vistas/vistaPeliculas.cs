@@ -15,6 +15,13 @@ namespace Proyecto_Taquilla.Vistas
 {
     public partial class vistaPeliculas : Form
     {
+        //codigo para registrar en bitacora la el CRUD de cine para registrar acciones en el sistema de auditoria
+        //2030 para cine
+        //2010 usuario
+        //2020 peliculas
+        int codigoAplicacion = 2020;
+        BitacoraControlador bitacoraAuditoria = new BitacoraControlador();
+
         private PeliculaController controller = new PeliculaController();
         public vistaPeliculas()
         {
@@ -68,10 +75,11 @@ namespace Proyecto_Taquilla.Vistas
                 MessageBox.Show("El nombre de la película es obligatorio.");
                 return;
             }
-
             controller.CrearPelicula(id, nombre, descripcion);
             CargarPeliculas();
             LimpiarCampos();
+            //registra acciones en bitacora de agregar
+            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "INS");
         }
 
         private void btnEditar_Click_1(object sender, EventArgs e)
@@ -88,6 +96,8 @@ namespace Proyecto_Taquilla.Vistas
             controller.ActualizarPelicula(id, nuevoNombre, nuevaDescripcion);
             CargarPeliculas();
             LimpiarCampos();
+            //registra acciones en bitacora de actualizar
+            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "UPD");
         }
 
         private void btnEliminar_Click_1(object sender, EventArgs e)
@@ -105,6 +115,8 @@ namespace Proyecto_Taquilla.Vistas
                 CargarPeliculas();
                 LimpiarCampos();
             }
+            //registra acciones en bitacora de eliminar
+            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "DEL");
         }
     } 
 }

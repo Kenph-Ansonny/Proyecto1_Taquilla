@@ -15,6 +15,12 @@ namespace Proyecto_Taquilla.Vistas
 {
     public partial class vistaCine : Form
     {
+        //codigo para registrar en bitacora la el CRUD de cine para registrar acciones en el sistema de auditoria
+        //2030 para cine
+        //2010 usuario
+        //2020 peliculas
+        int codigoAplicacion = 2030; 
+        BitacoraControlador bitacoraAuditoria = new BitacoraControlador();
         public vistaCine()
         {
             InitializeComponent();
@@ -37,6 +43,8 @@ namespace Proyecto_Taquilla.Vistas
             controlador.InsertarCine(nuevoCine);
             CargarDatos();
             LimpiarCampos();
+            //registra acciones en bitacora de agregar
+            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "INS");
         }
 
         private void dgvCine_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -104,6 +112,8 @@ namespace Proyecto_Taquilla.Vistas
            CineController.ActualizarCine(cineModificar.ID_Cine, cineModificar.Nombre, cineModificar.ID_plaza);
             CargarDatos();
             LimpiarCampos();
+            //registra acciones en bitacora de actualizar
+            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "UPD");
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -118,10 +128,8 @@ namespace Proyecto_Taquilla.Vistas
             {
                 MessageBox.Show("Porfavor introduzca un ID valido ", "Entrada invalida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            //int idCine = int.Parse(txbIDCine.Text);
-            //CineDAO.EliminarCine(idCine);
-            //CargarDatos();
-            //LimpiarCampos();
+            //registra acciones en bitacora de eliminar
+            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "DEL");
         }
     }
 }
