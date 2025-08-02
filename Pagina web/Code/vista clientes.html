@@ -60,15 +60,19 @@
     <p>© Cinépolis | Todos los derechos reservados</p>
   </footer>
 
-  <div id="modalLogin" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h3>🔑 Inicia sesión</h3>
-      <input type="text" placeholder="Usuario" />
-      <input type="password" placeholder="Contraseña" />
-      <button class="login-submit">Ingresar</button>
-          <a href="./Formulario Registro.html"><h3>¿No tienes cuenta? Crea Una</h3></a>
-          </div>
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>🔑 Inicia sesión</h3>
+    <form id="loginForm"> <!-- Envuelve los inputs en un formulario -->
+      <input type="text" id="usuarioInput" placeholder="Usuario" required />
+      <input type="password" id="contrasenaInput" placeholder="Contraseña" required />
+      <button type="submit" class="login-submit">Ingresar</button> <!-- type="submit" -->
+    </form>
+    <a href="./Formulario Registro.html"><h3>¿No tienes cuenta? Crea Una</h3></a>
+  </div>
+</div>
+
 
   </div>
 <div id="modalCarrito" class="modal">
