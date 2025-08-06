@@ -1,6 +1,7 @@
 ﻿//Cesar Estrada Elias 0901-22-10153
 //se cambio de categoriaDAO.cs a cineDAO.cs
 using MySql.Data.MySqlClient;
+using Proyecto_Taquilla.Controlador;
 using Proyecto_Taquilla.Modelo;
 using System;
 using System.Collections.Generic;
@@ -8,76 +9,120 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proyecto_Taquilla.Controlador
+namespace Proyecto_Taquilla.Modelo
 {
     public class CineDAO
     {
-        private static string connectionString = "server=nozomi.proxy.rlwy.net;port=38006;database=Taquilla;user=root;password=SsXjimxwICYsLVqKRBFbNSBSfrEZrtUS;SslMode=none";
-        public static List<Cine> ObtenerCine()
+        private static readonly string SQL_SELECT = @"
+            SELECT ID_Cine, Nombre, ID_plaza, Cantidad_de_Salas 
+            FROM Cine";
+
+        private static readonly string SQL_INSERT = @"
+            INSERT INTO Cine (ID_Cine, Nombre, ID_plaza, Cantidad_de_Salas) 
+            VALUES (@ID_Cine, @Nombre, @ID_plaza, @Cantidad_de_Salas)";
+
+        private static readonly string SQL_UPDATE = @"
+            UPDATE Cine SET 
+                Nombre = @Nombre, 
+                ID_plaza = @ID_plaza,
+                Cantidad_de_Salas = @Cantidad_de_Salas
+            WHERE ID_Cine = @ID_Cine";
+
+        private static readonly string SQL_DELETE = "DELETE FROM Cine WHERE ID_Cine = @ID_Cine";
+
+        private static readonly string SQL_QUERY = @"
+            SELECT ID_Cine, Nombre, ID_plaza, Cantidad_de_Salas 
+            FROM Cine 
+            WHERE ID_Cine = @ID_Cine";
+
+        public List<Cine> ObtenerCine()
         {
-            List<Cine> lista = new List<Cine>();
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            List<Cine> cines = new List<Cine>();
+            using (var conn = Conexion.ObtenerConexion())
             {
-                conn.Open();
-                string query = "SELECT * FROM cine";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                MySqlCommand cmd = new MySqlCommand(SQL_SELECT, conn);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    Cine cine = new Cine
-                    (
-                        reader.GetInt32("ID_Cine"),
-                        reader.GetString("Nombre"),
-                        reader.GetInt32("ID_plaza")
-                    );
-                    lista.Add(cine);
+                    while (reader.Read())
+                    {
+                        Cine cine = new Cine
+                        {
+                            ID_Cine = reader.GetInt32("ID_Cine"),
+                            Nombre = reader.GetString("Nombre"),
+                            ID_plaza = reader.GetInt32("ID_plaza"),
+                            Cantidad_de_Salas = reader.GetInt32("Cantidad_de_Salas")
+                        };
+                        cines.Add(cine);
+                    }
                 }
             }
-            return lista;
+            return cines;
         }
-        public static void InsertarCine(Cine cine)
+
+        public int InsertarCine(Cine cine)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            int filasAfectadas = 0;
+            using (var conn = Conexion.ObtenerConexion())
             {
-                conn.Open();
-                string sql = "INSERT INTO cine (ID_Cine, Nombre, ID_plaza) VALUES (@id, @nombre, @id_plaza)";
-                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", cine.ID_Cine);
-                    cmd.Parameters.AddWithValue("@nombre", cine.Nombre);
-                    cmd.Parameters.AddWithValue("@id_plaza", cine.ID_plaza);
-                    cmd.ExecuteNonQuery();
-                }
+                MySqlCommand cmd = new MySqlCommand(SQL_INSERT, conn);
+                cmd.Parameters.AddWithValue("@ID_Cine", cine.ID_Cine);
+                cmd.Parameters.AddWithValue("@Nombre", cine.Nombre);
+                cmd.Parameters.AddWithValue("@ID_plaza", cine.ID_plaza);
+                cmd.Parameters.AddWithValue("@Cantidad_de_Salas", cine.Cantidad_de_Salas);
+                filasAfectadas = cmd.ExecuteNonQuery();
             }
+            return filasAfectadas;
         }
-        public static void ActualizarCine(Cine cine)
+
+        public int ActualizarCine(Cine cine)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            int filasAfectadas = 0;
+            using (var conn = Conexion.ObtenerConexion())
             {
-                conn.Open();
-                string sql = "UPDATE cine SET Nombre = @nombre, ID_plaza = @id_plaza WHERE ID_Cine = @idCine";
-                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@idCine", cine.ID_Cine);
-                    cmd.Parameters.AddWithValue("@nombre", cine.Nombre);
-                    cmd.Parameters.AddWithValue("@id_plaza", cine.ID_plaza);
-                    cmd.ExecuteNonQuery();
-                }
+                MySqlCommand cmd = new MySqlCommand(SQL_UPDATE, conn);
+                cmd.Parameters.AddWithValue("@Nombre", cine.Nombre);
+                cmd.Parameters.AddWithValue("@ID_plaza", cine.ID_plaza);
+                cmd.Parameters.AddWithValue("@Cantidad_de_Salas", cine.Cantidad_de_Salas);
+                cmd.Parameters.AddWithValue("@ID_Cine", cine.ID_Cine);
+                filasAfectadas = cmd.ExecuteNonQuery();
             }
+            return filasAfectadas;
         }
-        //Eliminar un cine por ID
-        public static void EliminarCine(int idCine)
+
+        public int BorrarCine(Cine cine)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            int filasAfectadas = 0;
+            using (var conn = Conexion.ObtenerConexion())
             {
-                conn.Open();
-                string sql = "DELETE FROM cine WHERE ID_Cine = @idCine";
-                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                MySqlCommand cmd = new MySqlCommand(SQL_DELETE, conn);
+                cmd.Parameters.AddWithValue("@ID_Cine", cine.ID_Cine);
+                filasAfectadas = cmd.ExecuteNonQuery();
+            }
+            return filasAfectadas;
+        }
+
+        public Cine Query(int idCine)
+        {
+            Cine cine = null;
+            using (var conn = Conexion.ObtenerConexion())
+            {
+                MySqlCommand cmd = new MySqlCommand(SQL_QUERY, conn);
+                cmd.Parameters.AddWithValue("@ID_Cine", idCine);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    cmd.Parameters.AddWithValue("@idCine", idCine);
-                    cmd.ExecuteNonQuery();
+                    if (reader.Read())
+                    {
+                        cine = new Cine
+                        {
+                            ID_Cine = reader.GetInt32("ID_Cine"),
+                            Nombre = reader.GetString("Nombre"),
+                            ID_plaza = reader.GetInt32("ID_plaza"),
+                            Cantidad_de_Salas = reader.GetInt32("Cantidad_de_Salas")
+                        };
+                    }
                 }
             }
+            return cine;
         }
     }
 }
