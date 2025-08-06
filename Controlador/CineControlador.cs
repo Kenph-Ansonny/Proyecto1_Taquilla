@@ -14,25 +14,36 @@ namespace Proyecto_Taquilla.Controlador
 {
     public class CineController
     {
+        // Obtener todos los cines
         public List<Cine> ObtenerTodosLosCines()
         {
-            return CineDAO.ObtenerCine();
+            return new CineDAO().ObtenerCine();
         }
-        //se envia el objeto no argumentos
-        public void InsertarCine(Cine cine)
+
+        // Insertar un nuevo cine
+        public int InsertarCine(Cine cine)
         {
-            CineDAO.InsertarCine(cine);
+            return new CineDAO().InsertarCine(cine);
         }
-        //actualizarCine
-        public void ActualizarCine(int id_cine, string nombre, int id_plaza)
+
+        // Actualizar un cine existente
+        public int ActualizarCine(int id_cine, string nombre, int id_plaza, int cantidad_salas)
         {
-            Cine actualizado = new Cine(id_cine, nombre, id_plaza);
-            CineDAO.ActualizarCine(actualizado);
+            Cine actualizado = new Cine(id_cine, nombre, id_plaza, cantidad_salas);
+            return new CineDAO().ActualizarCine(actualizado);
         }
-        //EliminarCine por ID
-        public void EliminarCine(int idCine)
+
+        // Eliminar un cine por ID
+        public int EliminarCine(int idCine)
         {
-            CineDAO.EliminarCine(idCine);
+            Cine cine = new Cine { ID_Cine = idCine };
+            return new CineDAO().BorrarCine(cine);
+        }
+
+        // Consultar un cine por ID
+        public Cine BuscarCinePorId(int idCine)
+        {
+            return new CineDAO().Query(idCine);
         }
     }
 }

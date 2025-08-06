@@ -211,7 +211,7 @@
             cbxClasificacion.FormattingEnabled = true;
             cbxClasificacion.Location = new Point(290, 466);
             cbxClasificacion.Name = "cbxClasificacion";
-            cbxClasificacion.Size = new Size(182, 33);
+            cbxClasificacion.Size = new Size(241, 33);
             cbxClasificacion.TabIndex = 22;
             cbxClasificacion.SelectedIndexChanged += cbxClasificacion_SelectedIndexChanged;
             // 

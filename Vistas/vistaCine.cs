@@ -10,17 +10,13 @@ using System.Windows.Forms;
 using Proyecto_Taquilla.Controlador;
 using Proyecto_Taquilla.Modelo;
 
-
 namespace Proyecto_Taquilla.Vistas
 {
     public partial class vistaCine : Form
     {
-        //codigo para registrar en bitacora la el CRUD de cine para registrar acciones en el sistema de auditoria
-        //2030 para cine
-        //2010 usuario
-        //2020 peliculas
-        int codigoAplicacion = 2030; 
+        int codigoAplicacion = 2030;
         BitacoraControlador bitacoraAuditoria = new BitacoraControlador();
+
         public vistaCine()
         {
             InitializeComponent();
@@ -37,37 +33,44 @@ namespace Proyecto_Taquilla.Vistas
             {
                 ID_Cine = int.Parse(txbIDCine.Text),
                 Nombre = txbNombre.Text,
-                ID_plaza = int.Parse(txbID_plaza.Text)
+                ID_plaza = int.Parse(txbID_plaza.Text),
+                Cantidad_de_Salas = int.Parse(txbCantSalas.Text)
             };
-            CineController controlador= new CineController();
+
+            CineController controlador = new CineController();
             controlador.InsertarCine(nuevoCine);
             CargarDatos();
             LimpiarCampos();
-            //registra acciones en bitacora de agregar
+
+            // Registrar acción en bitácora
             bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "INS");
         }
 
         private void dgvCine_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex>=0)
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow fila = dgvCine.Rows[e.RowIndex];
-                txbIDCine.Text = fila.Cells["IdCine"].Value.ToString();
+                txbIDCine.Text = fila.Cells["ID_Cine"].Value.ToString();
                 txbNombre.Text = fila.Cells["Nombre"].Value.ToString();
-                txbID_plaza.Text = fila.Cells["IdPlaza"].Value.ToString();
+                txbID_plaza.Text = fila.Cells["ID_plaza"].Value.ToString();
+                txbCantSalas.Text = fila.Cells["Cantidad_de_Salas"].Value.ToString();
             }
         }
+
         private void LimpiarCampos()
         {
             txbIDCine.Clear();
             txbNombre.Clear();
             txbID_plaza.Clear();
+            txbCantSalas.Clear();
         }
 
         private void vistaCine_Load(object sender, EventArgs e)
         {
             CargarDatos();
         }
+
         private void CargarDatos()
         {
             CineController controlador = new CineController();
@@ -77,42 +80,44 @@ namespace Proyecto_Taquilla.Vistas
 
         private void labelNombre_Click(object sender, EventArgs e)
         {
-
         }
 
         private void labelPlaza_Click(object sender, EventArgs e)
         {
-
         }
 
         private void txbIDCine_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void txbNombre_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void txbID_plaza_TextChanged(object sender, EventArgs e)
         {
+        }
 
+        private void txbCantSalas_TextChanged(object sender, EventArgs e)
+        {
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            CineController CineController = new CineController();
-            Cine cineModificar = new Cine()
+            CineController controlador = new CineController();
+            Cine cineModificar = new Cine
             {
                 ID_Cine = int.Parse(txbIDCine.Text),
                 Nombre = txbNombre.Text,
-                ID_plaza = int.Parse(txbID_plaza.Text)
+                ID_plaza = int.Parse(txbID_plaza.Text),
+                Cantidad_de_Salas = int.Parse(txbCantSalas.Text)
             };
-           CineController.ActualizarCine(cineModificar.ID_Cine, cineModificar.Nombre, cineModificar.ID_plaza);
+
+            controlador.ActualizarCine(cineModificar.ID_Cine, cineModificar.Nombre, cineModificar.ID_plaza, cineModificar.Cantidad_de_Salas);
             CargarDatos();
             LimpiarCampos();
-            //registra acciones en bitacora de actualizar
+
+            // Registrar acción en bitácora
             bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "UPD");
         }
 
@@ -120,16 +125,18 @@ namespace Proyecto_Taquilla.Vistas
         {
             if (int.TryParse(txbIDCine.Text, out int idCine))
             {
-                CineDAO.EliminarCine(idCine);
+                CineController controlador = new CineController();
+                controlador.EliminarCine(idCine);
                 CargarDatos();
                 LimpiarCampos();
+
+                // Registrar acción en bitácora
+                bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "DEL");
             }
             else
             {
-                MessageBox.Show("Porfavor introduzca un ID valido ", "Entrada invalida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, introduzca un ID válido.", "Entrada inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            //registra acciones en bitacora de eliminar
-            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "DEL");
         }
     }
 }

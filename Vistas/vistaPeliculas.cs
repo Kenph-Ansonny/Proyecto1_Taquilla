@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+//cambiar despues en el datagriuv la columna de clasificacion como = Clasificacion(G, PG, PG-13, R, NC-17)
 namespace Proyecto_Taquilla.Vistas
 {
     public partial class vistaPeliculas : Form
