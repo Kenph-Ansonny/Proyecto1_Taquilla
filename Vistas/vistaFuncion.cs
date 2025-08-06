@@ -10,77 +10,41 @@ using System.Windows.Forms;
 using Proyecto_Taquilla.Controlador;
 using Proyecto_Taquilla.Modelo;
 
-
+//cesar armando estrada elias 0901-22-10153
 namespace Proyecto_Taquilla.Vistas
 {
     public partial class vistaFuncion : Form
     {
-        int codigoAplicacion = 2040; // Suponiendo código 2040 para funciones
+        int codigoAplicacion = 2040;
         BitacoraControlador bitacoraAuditoria = new BitacoraControlador();
 
         public vistaFuncion()
         {
             InitializeComponent();
-            CargarDatos();
             CargarCombos();
+            CargarDatos();
         }
 
-        private void label1_Click(object sender, EventArgs e) { }
-
-        private void txbIDFuncion_TextChanged(object sender, EventArgs e) { }
-
-        private void txbHorario_TextChanged(object sender, EventArgs e) { }
-
-        private void txbFecha_TextChanged(object sender, EventArgs e) { }
-
-        private void txbCantBoletos_TextChanged(object sender, EventArgs e) { }
-
-        private void cbxIdioma_SelectedIndexChanged(object sender, EventArgs e) { }
-
-        private void cbxProyeccion_SelectedIndexChanged(object sender, EventArgs e) { }
-
-        private void cbxPelicula_SelectedIndexChanged(object sender, EventArgs e) { }
-
-        private void cbxSalaCine_SelectedIndexChanged(object sender, EventArgs e) { }
+        // Cargar ComboBoxes desde DAO personalizado
         private void CargarCombos()
         {
-            cbxIdioma.DataSource = CatalogoDAO.ObtenerIdiomas();
+            cbxIdioma.DataSource = ComboboxFuncionDAO.ObtenerIdiomas();
             cbxIdioma.DisplayMember = "Descripcion";
             cbxIdioma.ValueMember = "ID_Idioma";
-            cbxIdioma.Refresh();//renderizar
+            cbxIdioma.SelectedIndex = -1;
 
-            cbxProyeccion.DataSource = CatalogoDAO.ObtenerProyecciones();
-            cbxProyeccion.DisplayMember = "Tipo_de_proyeccion";
-            cbxProyeccion.ValueMember = "ID_Proyeccion";
-            cbxProyeccion.Refresh();//renderizar
-
-            cbxPelicula.DataSource = CatalogoDAO.ObtenerPeliculas();
+            cbxPelicula.DataSource = ComboboxFuncionDAO.ObtenerPeliculas();
             cbxPelicula.DisplayMember = "Nombre";
-            cbxPelicula.ValueMember = "id_pelicula";
-            cbxPelicula.Refresh();//renderizar
+            cbxPelicula.ValueMember = "ID_Pelicula";
+            cbxPelicula.SelectedIndex = -1;
 
-            cbxSalaCine.DataSource = CatalogoDAO.ObtenerSalas();
+            cbxSalaCine.DataSource = ComboboxFuncionDAO.ObtenerSalas();
             cbxSalaCine.DisplayMember = "No_Sala";
             cbxSalaCine.ValueMember = "ID_SALA_DE_CINE";
-            cbxSalaCine.Refresh();//renderizar
+            cbxSalaCine.SelectedIndex = -1;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
-                txbIDFuncion.Text = fila.Cells["ID_Funcion"].Value.ToString();
-                txbHorario.Text = fila.Cells["Horario"].Value.ToString();
-                txbFecha.Text = fila.Cells["Fecha"].Value.ToString();
-                txbCantBoletos.Text = fila.Cells["Cantidad_Boletos"].Value.ToString();
-                cbxIdioma.Text = fila.Cells["Idioma"].Value.ToString();
-                cbxProyeccion.Text = fila.Cells["Tipo_Proyeccion"].Value.ToString();
-                cbxPelicula.SelectedValue = fila.Cells["ID_Pelicula"].Value;
-                cbxSalaCine.SelectedValue = fila.Cells["ID_SalaCine"].Value;
-            }
-        }
-
+        // Mostrar funciones en DataGridView
         private void CargarDatos()
         {
             FuncionControlador controlador = new FuncionControlador();
@@ -92,81 +56,103 @@ namespace Proyecto_Taquilla.Vistas
                 f.Horario,
                 Fecha = f.Fecha.ToString("dd/MM/yyyy"),
                 f.Cantidad_Boletos,
-                Pelicula = f.Nombre_Pelicula,           // Muestra el nombre de la película
-                Sala = f.No_Sala,                        // Muestra el número de sala
-                Idioma = f.Descripcion_Idioma,          // Muestra la descripción del idioma
-                Proyeccion = f.Tipo_Proyeccion          // Muestra tipo de proyección
+                Pelicula = f.Nombre_Pelicula,
+                Sala = f.No_Sala,
+                Idioma = f.Descripcion_Idioma
             }).ToList();
 
             dataGridView1.DataSource = datosParaMostrar;
         }
 
-        //private void CargarDatos()
-        //{
-        //    FuncionControlador controlador = new FuncionControlador();
-        //    List<Funcion> listaFunciones = controlador.ObtenerTodosFunciones();
-        //    dataGridView1.DataSource = listaFunciones;
-        //}
+        // Llenar campos al seleccionar fila
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
 
+                txbIDFuncion.Text = fila.Cells["ID_Funcion"].Value.ToString();
+                txbHorario.Text = fila.Cells["Horario"].Value.ToString();
+                txbFecha.Text = fila.Cells["Fecha"].Value.ToString();
+                txbCantBoletos.Text = fila.Cells["Cantidad_Boletos"].Value.ToString();
+
+                // Selección en ComboBoxes
+                cbxIdioma.Text = fila.Cells["Idioma"].Value.ToString();
+                cbxPelicula.Text = fila.Cells["Pelicula"].Value.ToString();
+                cbxSalaCine.Text = fila.Cells["Sala"].Value.ToString();
+            }
+        }
+
+        // Limpiar campos del formulario
         private void LimpiarCampos()
         {
             txbIDFuncion.Clear();
             txbHorario.Clear();
             txbFecha.Clear();
             txbCantBoletos.Clear();
+
             cbxIdioma.SelectedIndex = -1;
-            cbxProyeccion.SelectedIndex = -1;
             cbxPelicula.SelectedIndex = -1;
             cbxSalaCine.SelectedIndex = -1;
         }
 
-        // Agregar
+        // Botón: Agregar
         private void Agregar_Click(object sender, EventArgs e)
         {
-            Funcion nuevaFuncion = new Funcion
+            try
             {
-                ID_Funcion = int.Parse(txbIDFuncion.Text),
-                Horario = txbHorario.Text,
-                Fecha = DateTime.Parse(txbFecha.Text),
-                Cantidad_Boletos = int.Parse(txbCantBoletos.Text),
-                ID_Idioma = Convert.ToInt32(cbxIdioma.SelectedValue),
-                ID_Proyeccion = Convert.ToInt32(cbxProyeccion.SelectedValue),
-                ID_Pelicula = Convert.ToInt32(cbxPelicula.SelectedValue),
-                ID_SALA_DE_CINE = Convert.ToInt32(cbxSalaCine.SelectedValue)
-            };
+                Funcion nuevaFuncion = new Funcion
+                {
+                    ID_Funcion = int.Parse(txbIDFuncion.Text),
+                    Horario = txbHorario.Text,
+                    Fecha = DateTime.Parse(txbFecha.Text),
+                    Cantidad_Boletos = int.Parse(txbCantBoletos.Text),
+                    ID_Idioma = Convert.ToInt32(cbxIdioma.SelectedValue),
+                    ID_Pelicula = Convert.ToInt32(cbxPelicula.SelectedValue),
+                    ID_Sala = Convert.ToInt32(cbxSalaCine.SelectedValue)
+                };
 
-            FuncionControlador controlador = new FuncionControlador();
-            controlador.InsertarFuncion(nuevaFuncion);
-            CargarDatos();
-            LimpiarCampos();
-            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "INS");
+                FuncionControlador controlador = new FuncionControlador();
+                controlador.InsertarFuncion(nuevaFuncion);
+                CargarDatos();
+                LimpiarCampos();
+                bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "INS");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al agregar la función: " + ex.Message);
+            }
         }
 
-
-        // Actualizar
+        // Botón: Actualizar
         private void button2_Click(object sender, EventArgs e)
         {
-            Funcion funcionActualizar = new Funcion
+            try
             {
-                ID_Funcion = int.Parse(txbIDFuncion.Text),
-                Horario = txbHorario.Text,
-                Fecha = DateTime.Parse(txbFecha.Text),
-                Cantidad_Boletos = int.Parse(txbCantBoletos.Text),
-                ID_Idioma = Convert.ToInt32(cbxIdioma.SelectedValue),
-                ID_Proyeccion = Convert.ToInt32(cbxProyeccion.SelectedValue),
-                ID_Pelicula = Convert.ToInt32(cbxPelicula.SelectedValue),
-                ID_SALA_DE_CINE = Convert.ToInt32(cbxSalaCine.SelectedValue)
-            };
+                Funcion funcionActualizar = new Funcion
+                {
+                    ID_Funcion = int.Parse(txbIDFuncion.Text),
+                    Horario = txbHorario.Text,
+                    Fecha = DateTime.Parse(txbFecha.Text),
+                    Cantidad_Boletos = int.Parse(txbCantBoletos.Text),
+                    ID_Idioma = Convert.ToInt32(cbxIdioma.SelectedValue),
+                    ID_Pelicula = Convert.ToInt32(cbxPelicula.SelectedValue),
+                    ID_Sala = Convert.ToInt32(cbxSalaCine.SelectedValue)
+                };
 
-            FuncionControlador controlador = new FuncionControlador();
-            controlador.ActualizarFuncion(funcionActualizar);
-            CargarDatos();
-            LimpiarCampos();
-            bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "UPD");
+                FuncionControlador controlador = new FuncionControlador();
+                controlador.ActualizarFuncion(funcionActualizar);
+                CargarDatos();
+                LimpiarCampos();
+                bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "UPD");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar la función: " + ex.Message);
+            }
         }
 
-
-        // Eliminar
+        // Botón: Eliminar
         private void button3_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txbIDFuncion.Text, out int idFuncion))
@@ -179,8 +165,18 @@ namespace Proyecto_Taquilla.Vistas
             }
             else
             {
-                MessageBox.Show("Por favor introduzca un ID válido", "Entrada inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, introduzca un ID válido", "Entrada inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        // Eventos vacíos (pueden eliminarse si no se usan)
+        private void label1_Click(object sender, EventArgs e) { }
+        private void txbIDFuncion_TextChanged(object sender, EventArgs e) { }
+        private void txbHorario_TextChanged(object sender, EventArgs e) { }
+        private void txbFecha_TextChanged(object sender, EventArgs e) { }
+        private void txbCantBoletos_TextChanged(object sender, EventArgs e) { }
+        private void cbxIdioma_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void cbxPelicula_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void cbxSalaCine_SelectedIndexChanged(object sender, EventArgs e) { }
     }
 }

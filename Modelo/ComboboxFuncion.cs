@@ -14,25 +14,18 @@ namespace Proyecto_Taquilla.Modelo
         public bool Doblada { get; set; }
         public bool Subtitulos { get; set; }
         //Sirve para el dsiplay de la vista Funcion
+
         public string Descripcion
         {
             get
             {
                 string texto = "";
-                if (Doblada) texto += "Doblada";
-                if (Subtitulos) texto += (texto != "" ? " y " : "") + "Subtitulada";
-                return texto == "" ? "Original" : texto;
+                if (Doblada) texto += "Doblada/ESP";//doblada al español
+                if (Subtitulos) texto += (texto != "" ? " y " : "") + "Subtitulada/Original";
+                return texto == "" ? "Original" : texto;//Idioma original
             }
         }
     }
-
-
-    public class TipoProyeccion
-    {
-        public int ID_Proyeccion { get; set; }
-        public string Tipo_de_proyeccion { get; set; }
-    }
-
     public class Peliculacbx
     {
         public int ID_Pelicula { get; set; }

@@ -20,7 +20,7 @@ namespace Proyecto_Taquilla.Modelo
         private static readonly string SQL_INSERT = @"
             INSERT INTO Cine (ID_Cine, Nombre, ID_plaza, Cantidad_de_Salas) 
             VALUES (@ID_Cine, @Nombre, @ID_plaza, @Cantidad_de_Salas)";
-
+        //va a traerlo desde la tabla 
         private static readonly string SQL_UPDATE = @"
             UPDATE Cine SET 
                 Nombre = @Nombre, 
@@ -88,18 +88,49 @@ namespace Proyecto_Taquilla.Modelo
             }
             return filasAfectadas;
         }
+        public bool TieneSalasAsociadas(int idCine)
+        {
+            using (var conn = Conexion.ObtenerConexion())
+            {
+                string sql = "SELECT COUNT(*) FROM SALA_DE_CINE WHERE ID_Cine = @ID_Cine";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ID_Cine", idCine);
+                int cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+                return cantidad > 0;
+            }
+        }
 
         public int BorrarCine(Cine cine)
         {
             int filasAfectadas = 0;
+
             using (var conn = Conexion.ObtenerConexion())
             {
+                // Validar si hay salas asociadas antes de eliminar
+                if (TieneSalasAsociadas(cine.ID_Cine))
+                {
+                    throw new InvalidOperationException("No se puede eliminar el cine porque tiene salas asociadas.");
+                }
+
                 MySqlCommand cmd = new MySqlCommand(SQL_DELETE, conn);
                 cmd.Parameters.AddWithValue("@ID_Cine", cine.ID_Cine);
                 filasAfectadas = cmd.ExecuteNonQuery();
             }
+
             return filasAfectadas;
         }
+
+        //public int BorrarCine(Cine cine)
+        //{
+        //    int filasAfectadas = 0;
+        //    using (var conn = Conexion.ObtenerConexion())
+        //    {
+        //        MySqlCommand cmd = new MySqlCommand(SQL_DELETE, conn);
+        //        cmd.Parameters.AddWithValue("@ID_Cine", cine.ID_Cine);
+        //        filasAfectadas = cmd.ExecuteNonQuery();
+        //    }
+        //    return filasAfectadas;
+        //}
 
         public Cine Query(int idCine)
         {
@@ -124,5 +155,6 @@ namespace Proyecto_Taquilla.Modelo
             }
             return cine;
         }
+
     }
 }

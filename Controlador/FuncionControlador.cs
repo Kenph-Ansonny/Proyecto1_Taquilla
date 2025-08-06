@@ -1,11 +1,8 @@
-﻿//Cesar Estrada Elias 0901-22-10153
-//Controlador para la clase Funcion con métodos por parámetros
+﻿// Cesar Estrada Elias 0901-22-10153
+// Controlador para la clase Funcion con métodos por parámetros 
 
-using Proyecto_Taquilla.Controlador;
 using Proyecto_Taquilla.Modelo;
-using System;
 using System.Collections.Generic;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Proyecto_Taquilla.Controlador
 {
@@ -30,7 +27,7 @@ namespace Proyecto_Taquilla.Controlador
         }
 
         // Eliminar una función por su ID
-        public   void EliminarFuncion(int id_funcion)
+        public void EliminarFuncion(int id_funcion)
         {
             FuncionDAO.EliminarFuncion(id_funcion);
         }
