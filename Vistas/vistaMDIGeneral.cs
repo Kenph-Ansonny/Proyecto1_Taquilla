@@ -1,4 +1,5 @@
 using Proyecto_Taquilla.Vistas;
+using System.Diagnostics;
 
 namespace Prototipo_Taquilla_Cliente
 {
@@ -103,6 +104,39 @@ namespace Prototipo_Taquilla_Cliente
         {
             vistaFuncion ventanaFuncion = new vistaFuncion();
             ventanaFuncion.Show();
+        }
+
+        private void btnReportePeliculaTaquilla_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Ruta relativa desde bin/Debug o bin/Release de Vista/
+                string rutaVisor = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "visor_ReportesPrograma", "VisorReportes.exe");
+
+                // Normalizar ruta completa
+                string rutaFinal = Path.GetFullPath(rutaVisor);
+
+                if (File.Exists(rutaFinal))
+                {
+                    Process.Start(rutaFinal);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró el visor de reportes en:\n" + rutaFinal, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir el visor:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtReporte_Click(object sender, EventArgs e)
+        {
+            if (!pnlReportes.Visible)
+                pnlReportes.Visible = true; //Muestra el panel de servicios
+            else
+                pnlReportes.Visible = false; //Oculta el panel de servicios
         }
     }
 }
