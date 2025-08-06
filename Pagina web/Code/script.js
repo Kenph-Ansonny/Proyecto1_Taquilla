@@ -150,7 +150,7 @@ window.addEventListener('click', e => {
 });
 
  document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault(); // ¡Importante! Evita el envío tradicional del formulario
+  e.preventDefault();
 
   const nombre_usuario = document.getElementById('usuarioInput').value;
   const contrasena = document.getElementById('contrasenaInput').value;
@@ -161,16 +161,19 @@ window.addEventListener('click', e => {
       headers: {
         "Content-Type": "application/json"
       },
-       body: JSON.stringify({ nombre_usuario, contrasena })
+      body: JSON.stringify({ nombre_usuario, contrasena })
     });
 
+    const data = await response.json();
+
     if (response.ok) {
-      const data = await response.json();
-      alert("✅ " + data.mensaje);
+      alert(`✅ ${data.mensaje}`);
+      
+      window.location.href="./cartelera.html"
     } else {
-      const error = await response.json();
-      alert("❌ Error: " + (error.error || "No autorizado"));
+      alert("❌ Error: " + (data.error || "No autorizado"));
     }
+
   } catch (error) {
     console.error("Error al intentar iniciar sesión:", error);
     alert("🚫 Error de red o servidor no disponible");

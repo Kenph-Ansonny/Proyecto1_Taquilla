@@ -1,0 +1,273 @@
+:root {
+  --azul: #003366;
+  --dorado: #f4c10f;
+  --fondo: #f2f2f2;
+  --texto: #222;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Encabezado y navegación */
+header {
+  background: var(--azul);
+  padding: 16px 32px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Contenedor de filtros y botones */
+.header-actions {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Filtros al centro */
+.filtros-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  gap: 12px;
+}
+.filtros-header select {
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+/* Botones a la derecha */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Logo a la izquierda */
+.logo {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-right: 32px;
+}
+
+/* Botones */
+.menu-btn, .login-btn {
+  background: var(--dorado);
+  color: var(--azul);
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+.menu-btn:hover, .login-btn:hover {
+  background-color: #e0b60e;
+}
+
+/* filtros alineados y centrados dentro del bloque */
+.filtros-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1; /* ocupa espacio disponible */
+  justify-content: center; /* centra los select dentro */
+  min-width: 280px; /* evita que colapsen si hay poco espacio */
+}
+.menu-btn,
+.login-btn {
+  background: var(--dorado);
+  color: var(--azul);
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu-btn:hover,
+.login-btn:hover {
+  background-color: #e0b60e;
+}
+
+.filtros-header select {
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+/* Carrusel */
+.carrousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  max-height: 400px;
+}
+.carrousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+.carrousel-item {
+  min-width: 100%;
+  position: relative;
+}
+.carrousel-item img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+.carrousel-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 1.1em;
+}
+
+/* Cartelera */
+.section {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+h2 {
+  color: var(--azul);
+  font-size: 1.5em;
+  margin-bottom: 16px;
+}
+#buscador {
+  width: 100%;
+  padding: 12px;
+  font-size: 1em;
+  margin-top: 20px;
+  margin-bottom: 24px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.cartelera-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  padding-bottom: 40px;
+  align-items: start;
+}
+.pelicula-img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+}
+.pelicula-info {
+  padding: 16px;
+  text-align: center;
+}
+.pelicula-info h3 {
+  font-size: 1.2em;
+  color: var(--azul);
+  margin-bottom: 8px;
+}
+.pelicula-info p {
+  margin: 6px 0;
+  font-size: 0.95em;
+}
+.pelicula-info button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: var(--dorado);
+  color: var(--azul);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.container{
+    margin: 0% auto;
+    max-width: 940px;
+    padding: 0 10px;
+    display: flex;
+    border: #222;
+    margin-top: 3%;
+}
+
+
+@media( min-width:850px){
+    .header h1{
+        font-size: 120px;
+    }
+
+}
+
+.container2{
+    display: flex;
+  gap: 10%;
+  margin-top: 6%;
+  
+  background-color: white;
+}
+.container h1{
+    color: var(--azul);
+    text-transform: uppercase;
+}
+.container2 p{
+    color: black;
+}
+
+
+
+.pconatiner{
+    margin-left: 10rem;
+    width: 40rem;
+    margin-top: 4rem;
+    font-size: 20px;
+
+
+}
+
+.pconatiner h2{
+    color: #003366;
+}
+
+
+
+
+  .pconatiner {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  
+.categorias{
+  position:absolute;
+  top: 40rem;
+  display: flex;
+  gap: 10px;
+}
+footer {
+  background: var(--azul);
+  color: white;
+  text-align: center;
+  padding: 16px;
+  margin-top: 40px;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
+}

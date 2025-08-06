@@ -1,36 +1,28 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 const pool = require("./dbt"); 
 
-// Configuración de CORS
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST'],
-  credentials: false
-}));
+const app = express();
 
-// Middleware para procesar JSON y URL-encoded
+// === Middleware ===
+app.use(cors({ origin: '*', methods: ['GET', 'POST'], credentials: false }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Encabezado para respuestas JSON
 app.use((req, res, next) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   next();
 });
 
-
+// === Ruta base ===
 app.get("/", (req, res) => {
   res.status(200).json({ status: "API funcionando" });
 });
 
+// === Ruta de ingreso ===
 app.post("/api/Ingreso", async (req, res) => {
   const { nombre_usuario, contrasena } = req.body;
-
   console.log("Datos recibidos:", req.body);
 
-  
   if (!nombre_usuario?.trim() || !contrasena?.trim()) {
     return res.status(400).json({
       error: "Faltan credenciales",
@@ -39,50 +31,40 @@ app.post("/api/Ingreso", async (req, res) => {
   }
 
   try {
-    const client = await pool.connect();
-    console.log("Conexión a DB establecida");
-
-    const userResult = await client.query(
-      "SELECT * FROM usuarios WHERE nombre_usuario = $1",
+    const [rows] = await pool.query(
+      "SELECT * FROM Usuarios WHERE Nombre_Usuario = ?",
       [nombre_usuario.trim()]
     );
 
-    if (userResult.rows.length === 0) {
-      client.release();
+    if (rows.length === 0) {
       return res.status(401).json({
         error: "Credenciales inválidas",
         detalles: "Usuario no encontrado"
       });
     }
 
-    const user = userResult.rows[0];
-
-    // Verificación de contraseña
-    if (user.contrasena !== contrasena) {
-      client.release();
+    const user = rows[0];
+    if (user.Contrasena !== contrasena) {
       return res.status(401).json({
         error: "Credenciales inválidas",
         detalles: "Contraseña incorrecta"
       });
     }
 
-    client.release();
+    const tipoUsuario = user.EsEmpleado === 1 ? "empleado" : "cliente";
 
-    
-    return res.status(200).json({
-      nombre_usuario: user.nombre_usuario.trim(),
+    const datosUsuario = {
+      id_usuario: user.ID_Usuario,
+      nombre_usuario: user.Nombre_Usuario.trim(),
+      tipo: tipoUsuario,
+      id_relacionado: user.ID_Cliente ?? null,
       mensaje: "Autenticación exitosa"
-    });
+    };
+
+    return res.status(200).json(datosUsuario);
 
   } catch (err) {
-   
-    console.error("Error detallado:", {
-      message: err.message,
-      stack: err.stack,
-      query: err.query,
-      parameters: err.parameters
-    });
-
+    console.error("❌ Error detallado:", err);
     return res.status(500).json({
       error: "Error interno del servidor",
       detalles: process.env.NODE_ENV === 'development' ? err.message : undefined
@@ -90,16 +72,7 @@ app.post("/api/Ingreso", async (req, res) => {
   }
 });
 
-// Manejo global de errores (fallback)
-app.use((err, req, res, next) => {
-  console.error("Error global:", err);
-  res.status(500).json({
-    error: "Error interno del servidor",
-    detalles: process.env.NODE_ENV === 'development' ? err.message : undefined
-  });
-});
 
-// Iniciar servidor
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
