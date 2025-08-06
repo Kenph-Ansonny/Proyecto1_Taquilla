@@ -195,6 +195,7 @@ CREATE TABLE bitacora (
     PRIMARY KEY (bitid),
     FOREIGN KEY (usuid) REFERENCES Usuarios(ID_Usuario)
 );
+
 CREATE VIEW Vista_Peliculas_Taquilleras AS
 SELECT 
     P.Nombre            AS Pelicula,
