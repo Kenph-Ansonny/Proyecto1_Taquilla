@@ -1,35 +1,25 @@
-const { Pool } = require("pg");
+const mysql = require("mysql2/promise");
 const dotenv = require("dotenv").config();
 
-const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 
-//  variables de entorno
-console.log("Variables de entorno:", {
-  PGHOST: PGHOST,
-  PGDATABASE: PGDATABASE,
-  PGUSER: PGUSER,
-  PGPASSWORD: PGPASSWORD ? "****" : "No definida"
+const pool = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  port: process.env.MYSQL_PORT,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  connectTimeout: 10000
 });
 
-const pool = new Pool({
-  host: PGHOST,
-  database: PGDATABASE,
-  user: PGUSER,
-  password: PGPASSWORD,
-  port: 5432,
-  ssl: {
-    rejectUnauthorized: false
-  },
-  connectionTimeoutMillis: 5000,
-  idleTimeoutMillis: 30000
-});
-
-// Verificar conexión al iniciar
-pool.query('SELECT NOW()', (err) => {
+pool.getConnection((err, connection) => {
   if (err) {
-    console.error('Error conectando a PostgreSQL:', err);
+    console.error("❌ Error conectando a MySQL:", err);
   } else {
-    console.log('Conexión a PostgreSQL exitosa');
+    console.log("✅ Conexión a MySQL exitosa");
+    connection.release();
   }
 });
 
