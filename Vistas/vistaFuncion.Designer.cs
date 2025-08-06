@@ -44,8 +44,6 @@
             cbxSalaCine = new ComboBox();
             lbIdioma = new Label();
             cbxIdioma = new ComboBox();
-            lbproyeccion = new Label();
-            cbxProyeccion = new ComboBox();
             button2 = new Button();
             button3 = new Button();
             dataGridView1 = new DataGridView();
@@ -109,7 +107,7 @@
             // lbPelicula
             // 
             lbPelicula.AutoSize = true;
-            lbPelicula.Location = new Point(103, 384);
+            lbPelicula.Location = new Point(259, 405);
             lbPelicula.Name = "lbPelicula";
             lbPelicula.Size = new Size(69, 25);
             lbPelicula.TabIndex = 6;
@@ -118,7 +116,7 @@
             // cbxPelicula
             // 
             cbxPelicula.FormattingEnabled = true;
-            cbxPelicula.Location = new Point(18, 412);
+            cbxPelicula.Location = new Point(174, 433);
             cbxPelicula.Name = "cbxPelicula";
             cbxPelicula.Size = new Size(239, 33);
             cbxPelicula.TabIndex = 7;
@@ -144,7 +142,7 @@
             // lbSalaCine
             // 
             lbSalaCine.AutoSize = true;
-            lbSalaCine.Location = new Point(395, 384);
+            lbSalaCine.Location = new Point(421, 198);
             lbSalaCine.Name = "lbSalaCine";
             lbSalaCine.Size = new Size(83, 25);
             lbSalaCine.TabIndex = 10;
@@ -153,7 +151,7 @@
             // cbxSalaCine
             // 
             cbxSalaCine.FormattingEnabled = true;
-            cbxSalaCine.Location = new Point(308, 412);
+            cbxSalaCine.Location = new Point(334, 226);
             cbxSalaCine.Name = "cbxSalaCine";
             cbxSalaCine.Size = new Size(239, 33);
             cbxSalaCine.TabIndex = 11;
@@ -176,24 +174,6 @@
             cbxIdioma.Size = new Size(239, 33);
             cbxIdioma.TabIndex = 13;
             cbxIdioma.SelectedIndexChanged += cbxIdioma_SelectedIndexChanged;
-            // 
-            // lbproyeccion
-            // 
-            lbproyeccion.AutoSize = true;
-            lbproyeccion.Location = new Point(395, 198);
-            lbproyeccion.Name = "lbproyeccion";
-            lbproyeccion.Size = new Size(98, 25);
-            lbproyeccion.TabIndex = 14;
-            lbproyeccion.Text = "Proyeccion";
-            // 
-            // cbxProyeccion
-            // 
-            cbxProyeccion.FormattingEnabled = true;
-            cbxProyeccion.Location = new Point(308, 226);
-            cbxProyeccion.Name = "cbxProyeccion";
-            cbxProyeccion.Size = new Size(239, 33);
-            cbxProyeccion.TabIndex = 15;
-            cbxProyeccion.SelectedIndexChanged += cbxProyeccion_SelectedIndexChanged;
             // 
             // button2
             // 
@@ -255,8 +235,6 @@
             Controls.Add(dataGridView1);
             Controls.Add(button3);
             Controls.Add(button2);
-            Controls.Add(cbxProyeccion);
-            Controls.Add(lbproyeccion);
             Controls.Add(cbxIdioma);
             Controls.Add(lbIdioma);
             Controls.Add(cbxSalaCine);
@@ -294,8 +272,6 @@
         private ComboBox cbxSalaCine;
         private Label lbIdioma;
         private ComboBox cbxIdioma;
-        private Label lbproyeccion;
-        private ComboBox cbxProyeccion;
         private Button button2;
         private Button button3;
         private DataGridView dataGridView1;

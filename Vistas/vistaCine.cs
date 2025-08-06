@@ -120,12 +120,21 @@ namespace Proyecto_Taquilla.Vistas
             // Registrar acción en bitácora
             bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "UPD");
         }
-
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txbIDCine.Text, out int idCine))
             {
                 CineController controlador = new CineController();
+
+                // Validación antes de eliminar
+                CineDAO cineDAO = new CineDAO();
+                if (cineDAO.TieneSalasAsociadas(idCine))
+                {
+                    MessageBox.Show("No se puede eliminar el cine porque tiene salas asociadas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Eliminar si no tiene dependencias
                 controlador.EliminarCine(idCine);
                 CargarDatos();
                 LimpiarCampos();
@@ -138,5 +147,23 @@ namespace Proyecto_Taquilla.Vistas
                 MessageBox.Show("Por favor, introduzca un ID válido.", "Entrada inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        //private void btnEliminar_Click(object sender, EventArgs e)
+        //{
+        //    if (int.TryParse(txbIDCine.Text, out int idCine))
+        //    {
+        //        CineController controlador = new CineController();
+        //        controlador.EliminarCine(idCine);
+        //        CargarDatos();
+        //        LimpiarCampos();
+
+        //        // Registrar acción en bitácora
+        //        bitacoraAuditoria.InsertBitacora(usuarioConectadoControlador.IdUsuario, codigoAplicacion, "DEL");
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Por favor, introduzca un ID válido.", "Entrada inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    }
+        //}
     }
 }
