@@ -4,46 +4,95 @@ const peliculas = {
       nombre: "Intensamente 2",
       duracion: "117 min",
       clasificacion: "A",
-      doblada: "15:15, 20:30, 20:40",
-      subtitulada: "18:00, 19:00, 21:45",
       imagen: "https://preview.redd.it/official-poster-for-inside-out-2-v0-kydd292s1ymc1.jpeg?auto=webp&s=1883bc3b14150de4d41c16880f8509b0c64c0f52",
-      enlace: "./Intensamente.html"
+      enlace: "./intensamente.html",
+      trailer: "Videos/IntensaMente 2 _ Tráiler Oficial _ Doblado con subtítulos descriptivos.mp4"
     },
     {
       nombre: "Cómo entrenar a tu dragón",
       duracion: "126 min",
       clasificacion: "A",
-      doblada: "13:25, 16:10",
-      subtitulada: "",
       imagen: "https://www.informador.mx/__export/1739397082528/sites/elinformador/img/2025/02/12/cxmo_entrenar_a_a_tu_dragxn_poster.jpg_524400468.jpg",
-      enlace: "./Como entrenar a tu dragon.html"
+      enlace: "./como entrenar a tu dragon.html",
+      trailer: "Videos/CÓMO ENTRENAR A TU DRAGÓN Tráiler 2 Español Latino (2025)(2).mp4"
     },
     {
       nombre: "Jurassic World: Renace",
       duracion: "134 min",
       clasificacion: "B",
-      doblada: "13:45",
-      subtitulada: "16:50",
       imagen: "https://image.tmdb.org/t/p/original/q0fGCmjLu42MPlSO9OYWpI5w86I.jpg",
-      enlace: "./Jurassic Park.html"
+      enlace: "./jurassic park.html",
+      trailer: "Videos/Jurassic World Renace Tráiler Oficial – HD.mp4"
     },
-
-      {
-      nombre: "Superman",
-      duracion: "130 min",
+    {
+      nombre: "Superman (2025)",
+      duracion: "129 min",
       clasificacion: "B",
-      doblada: "13:45",
-      subtitulada: "19:15",
-      imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU2j0Hgm1zjsN8SbAh_ZKPz-RoynuZdhSmgA&s",
-      enlace: "./Superman.html"
+      imagen: "Sources/superman2.jpg",
+      enlace: "./superman.html",
+      trailer: "Videos/SUPERMAN Tráiler Español Latino (2025).mp4"
+    }
+  ],
+  "Cinépolis Portales": [
+    {
+      nombre: "Spider-Man: Sin Camino a Casa",
+      duracion: "148 min",
+      clasificacion: "B",
+      imagen: "https://pics.filmaffinity.com/spider_man_no_way_home-642739124-large.jpg",
+      enlace: "./spiderman.html",
+      trailer: "Videos/SpiderMan_NoWayHome_Trailer.mp4"
+    },
+    {
+      nombre: "Destino Final",
+      duracion: "110 min",
+      clasificacion: "C",
+      imagen: "https://pics.filmaffinity.com/final_destination_bloodlines-790034090-large.jpg",
+      enlace: "./destino-final.html",
+      trailer: "Videos/DestinoFinal_Trailer.mp4"
+    }
+  ],
+  "Cinépolis Oakland Mall": [
+    {
+      nombre: "Jurassic World: Renace",
+      duracion: "134 min",
+      clasificacion: "B",
+      imagen: "https://image.tmdb.org/t/p/original/q0fGCmjLu42MPlSO9OYWpI5w86I.jpg",
+      enlace: "./jurassic park.html",
+      trailer: "Videos/Jurassic World Renace Tráiler Oficial – HD.mp4"
+    },
+    {
+      nombre: "Los Guardianes de la Galaxia",
+      duracion: "136 min",
+      clasificacion: "B",
+      imagen: "https://pics.filmaffinity.com/guardians_of_the_galaxy-595487268-large.jpg",
+      enlace: "./guardianes.html",
+      trailer: "Videos/Guardianes_Trailer.mp4"
+    }
+  ],
+  "Cinépolis El Frutal": [
+    {
+      nombre: "Superman (2025)",
+      duracion: "129 min",
+      clasificacion: "B",
+      imagen: "Sources/superman2.jpg",
+      enlace: "./superman.html",
+      trailer: "Videos/SUPERMAN Tráiler Español Latino (2025).mp4"
+    },
+    {
+      nombre: "Avengers: Infinity War",
+      duracion: "149 min",
+      clasificacion: "B",
+      imagen: "https://cdn.flickeringmyth.com/wp-content/uploads/2018/04/Avengers-Infinity-War-posters-56-2.jpg",
+      enlace: "./avengers.html",
+      trailer: "Videos/Avengers_Trailer.mp4"
     }
   ]
 };
 
-
 function renderCartelera(complejo) {
   const titulo = document.getElementById('tituloComplejo');
   const lista = document.getElementById('peliculasLista');
+
   titulo.textContent = `Cartelera - ${complejo}`;
   lista.innerHTML = '';
 
@@ -52,21 +101,52 @@ function renderCartelera(complejo) {
   cartelera.forEach(p => {
     const card = document.createElement('div');
     card.className = 'pelicula';
+
     card.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}" />
+      <a href="${p.enlace}">
+        <img src="${p.imagen}" alt="${p.nombre}" />
+      </a>
       <div class="pelicula-info">
         <h3>${p.nombre} <span class="clasificacion">${p.clasificacion}</span></h3>
         <p><strong>Duración:</strong> ${p.duracion}</p>
-        <div class="horarios">
-          <strong>Doblada:</strong> ${p.doblada || '—'}<br>
-          <strong>Subtitulada:</strong> ${p.subtitulada || '—'}
-        </div>
-        <a href="${p.enlace || '#'}" class="trailer-btn">▶️ Ver tráiler</a>
-
+        <button class="trailer-btn" data-trailer="${p.trailer}">▶️ Ver tráiler</button>
       </div>
     `;
+
+    const btn = card.querySelector('.trailer-btn');
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      abrirModal(this.getAttribute('data-trailer'));
+    });
+
     lista.appendChild(card);
   });
 }
 
-renderCartelera("Cinépolis Cayalá");
+function abrirModal(trailerSrc) {
+  const modal = document.getElementById('modalTrailer');
+  const video = document.getElementById('videoTrailer');
+
+  video.src = trailerSrc;
+  modal.style.display = 'flex';
+
+  // Cerrar el modal cuando el cursor salga del video
+  video.addEventListener('mouseleave', cerrarModal);
+}
+
+function cerrarModal() {
+  const modal = document.getElementById('modalTrailer');
+  const video = document.getElementById('videoTrailer');
+
+  video.pause();
+  video.src = '';
+  modal.style.display = 'none';
+
+  // Evitar múltiples listeners
+  video.removeEventListener('mouseleave', cerrarModal);
+}
+
+
+// Render inicial
+renderCartelera('Cinépolis Cayalá');
