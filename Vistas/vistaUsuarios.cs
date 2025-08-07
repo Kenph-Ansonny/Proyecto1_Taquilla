@@ -53,6 +53,9 @@ namespace Proyecto_Taquilla.Vistas
 
             string nombre = txtUsuario.Text.Trim();
             string contraseña = txtContraseña.Text.Trim();
+            int? idClienteNuevo = null;
+            int? idEmpleadoNuevo = null;
+            bool identificadorNuevo = false;
 
             if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(contraseña))
             {
@@ -60,7 +63,7 @@ namespace Proyecto_Taquilla.Vistas
                 return;
             }
 
-            controller.AgregarUsuario(id, nombre, contraseña,usuarioConectadoControlador.IdCliente, usuarioConectadoControlador.IdEmpleado, usuarioConectadoControlador.Identificador);
+            controller.AgregarUsuario(id, nombre, contraseña, idClienteNuevo, idEmpleadoNuevo, identificadorNuevo);
             CargarUsuarios();
             LimpiarCampos();
 
@@ -78,8 +81,12 @@ namespace Proyecto_Taquilla.Vistas
 
             string nombre = txtUsuario.Text.Trim();
             string contraseña = txtContraseña.Text.Trim();
+            int? idClienteNuevo = null;
+            int? idEmpleadoNuevo = null;
+            bool identificadorNuevo = false; // o true, según tu lógica
 
-            controller.ActualizarUsuario(id, nombre, contraseña, usuarioConectadoControlador.IdCliente, usuarioConectadoControlador.IdEmpleado, usuarioConectadoControlador.Identificador);
+
+            controller.ActualizarUsuario(id, nombre, contraseña, idClienteNuevo, idEmpleadoNuevo, identificadorNuevo);
             CargarUsuarios();
             LimpiarCampos();
 
