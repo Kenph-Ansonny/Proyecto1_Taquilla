@@ -1,0 +1,640 @@
+:root {
+  --azul: #003366;
+  --azul-hover: #001f2d;
+  --dorado: #f4c10f;
+  --dorado-hover: #e0b60e;
+  --fondo: #f2f2f2;
+  --texto: #222;
+  --gris-claro: #e6e6e6;
+  --gris-texto: #777;
+  --borde: #ccc;
+  --sombra: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+/* 🧭 Encabezado */
+header {
+  background: var(--azul);
+  padding: 16px 32px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+/* 🔘 Navegación */
+.nav-right {
+  display: flex;
+  gap: 16px;
+}
+
+.menu-btn {
+  background-color: var(--dorado-hover);
+  color: var(--azul-hover);
+  padding: 6px 12px;
+  font-size: 0.9em;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-btn:hover {
+  background-color: var(--dorado);
+}
+
+/* 📍 Menú de pasos */
+.barra-pasos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 16px var(--espaciado);
+  background-color: var(--gris-claro);
+  border-bottom: 1px solid var(--borde);
+  position: relative;
+}
+
+.paso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  color: var(--gris-texto);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.paso .icono {
+  font-size: 1.5em;
+  margin-bottom: 6px;
+}
+
+.paso .texto {
+  font-size: 0.9em;
+}
+
+.paso::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background-color: var(--borde);
+  z-index: -1;
+}
+
+.paso:last-child::after {
+  display: none;
+}
+
+.paso.activo {
+  color: var(--azul);
+  font-weight: bold;
+}
+
+.paso.activo .icono {
+  color: var(--dorado);
+}
+
+/* 🧱 Layout principal */
+.contenedor-boletos {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 30px;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* 🎟️ Boletos */
+.seleccion-boletos {
+  flex: 1;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--sombra);
+}
+
+.seleccion-boletos h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.limite {
+  font-size: 0.95em;
+  color: var(--gris-texto);
+  margin-bottom: 20px;
+}
+
+.categoria {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.tipo {
+  font-weight: 600;
+}
+
+.contador {
+  display: flex;
+  align-items: center;
+}
+
+.contador button {
+  background-color: var(--dorado);
+  color: var(--azul);
+  border: none;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contador button:hover {
+  background-color: var(--dorado-hover);
+}
+
+.contador input {
+  width: 40px;
+  text-align: center;
+  margin: 0 8px;
+  font-size: 1em;
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  background-color: var(--fondo);
+}
+
+/* ✅ Botón CONTINUAR */
+.btn-continuar {
+  margin-top: 24px;
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9em;
+  font-weight: bold;
+  background-color: var(--azul);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.btn-continuar:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-continuar:not(:disabled):hover {
+  background-color: var(--azul-hover);
+}
+
+/* 🪑 Asientos */
+.seleccion-asientos {
+  flex: 1;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--sombra);
+  display: none;
+}
+
+.pantalla-cine {
+  text-align: center;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  font-size: 1.2em;
+}
+
+.mapa-asientos {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.asiento {
+  width: 50px;
+  height: 50px;
+  background-color: #ccc;
+  border: 2px solid #999;
+  border-radius: 8px 8px 4px 4px;
+  position: relative;
+  cursor: pointer;
+  font-size: 0.8em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.asiento::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background-color: #ccc;
+  border-radius: 6px 6px 0 0;
+}
+
+.asiento:hover {
+  background-color: #ddd;
+}
+
+.asiento.seleccionado {
+  background-color: var(--dorado);
+  border-color: var(--azul);
+  color: var(--azul);
+}
+
+.asiento.ocupado {
+  background-color: var(--gris-texto);
+  border-color: var(--borde);
+  color: white;
+  cursor: not-allowed;
+}
+
+/* 📋 Resumen de selección */
+.resumen {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.resumen h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.resumen p {
+  font-size: 0.95em;
+  margin-bottom: 10px;
+}
+
+.resumen ul {
+  list-style: none;
+  padding: 0;
+}
+
+.resumen ul li {
+  margin: 6px 0;
+  font-size: 0.95em;
+  color: var(--texto);
+}
+
+.btn-continuar-asientos {
+  display: block;
+  margin: 40px auto 0 auto;
+  background-color: var(--dorado);
+  color: var(--azul);
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  text-align: center;
+}
+
+.btn-continuar-asientos:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-continuar-asientos:not(:disabled):hover {
+  background-color: var(--dorado-hover);
+}
+
+/* 💳 Pago */
+.seleccion-pago {
+  flex: 1;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--sombra);
+  display: none;
+}
+
+.formulario-pago {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formulario-pago label {
+  font-weight: bold;
+  font-size: 0.95em;
+  color: var(--texto);
+}
+
+.formulario-pago input {
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background-color: var(--fondo);
+}
+
+  .btn-finalizar {
+  margin-top: 24px;
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9em;
+  font-weight: bold;
+  background-color: var(--azul);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-finalizar:hover {
+  background-color: var(--azul-hover);
+}
+
+/* 🧾 Resumen de compra */
+.resumen-compra {
+  width: 320px;
+  position: sticky;
+  top: 100px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.resumen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.resumen-header h3 {
+  font-size: 1.3em;
+}
+
+.cerrar-resumen {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.poster-pelicula {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.info-pelicula p {
+  margin: 6px 0;
+  font-size: 0.95em;
+}
+
+.nota-servicio {
+  font-size: 0.85em;
+  color: #888;
+  margin-top: 15px;
+}
+
+.total-compra {
+  margin-top: 20px;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* 📎 Footer */
+footer {
+  background: var(--azul);
+  color: white;
+  text-align: center;
+  padding: 16px;
+  margin-top: 40px;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
+}
+/* 🧍 Datos personales */
+.formulario-pago input[type="email"],
+.formulario-pago input[type="text"],
+.formulario-pago input[type="month"] {
+  width: 100%;
+}
+
+/* 💳 Método de pago */
+/* 💳 Sección de pago con diseño compacto y profesional */
+.seleccion-pago {
+  flex: 1;
+  background-color: white;
+  padding: 20px 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--sombra);
+  font-size: 0.88em;
+  max-width: 500px;
+  margin: auto;
+}
+
+.formulario-pago {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 🧱 Etiquetas individuales */
+.formulario-pago label {
+  font-weight: 600;
+  color: var(--texto);
+  font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🧱 Etiquetas en fila */
+.fila-doble {
+  display: flex;
+  gap: 12px;
+}
+
+.fila-doble label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🖊️ Inputs */
+.formulario-pago input {
+  margin-top: 6px;
+  padding: 8px 10px;
+  font-size: 0.88em;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background-color: var(--fondo);
+  transition: border-color 0.3s ease;
+}
+
+.formulario-pago input:focus {
+  outline: none;
+  border-color: var(--azul);
+}
+
+/* 🎯 Método de pago y facturación */
+.metodo-pago,
+.facturacion {
+  background-color: var(--gris-claro);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.metodo-pago legend,
+.facturacion legend {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--azul);
+  font-size: 0.95em;
+}
+
+.metodo-pago label,
+.facturacion label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 0.88em;
+  color: var(--gris-texto);
+}
+
+.metodo-pago input[type="radio"],
+.facturacion input[type="radio"] {
+  accent-color: var(--azul);
+  transform: scale(1.1);
+}
+
+/* ✅ Términos y condiciones */
+.terminos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85em;
+  color: var(--gris-texto);
+  margin-top: 10px;
+}
+
+.terminos a {
+  color: var(--azul);
+  text-decoration: underline;
+}
+
+/* 🧾 Botón finalizar */
+.btn-finalizar {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 0.9em;
+  font-weight: bold;
+  background-color: var(--azul);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-finalizar:hover {
+  background-color: var(--azul-hover);
+}
+.datos-factura {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background-color: var(--gris-claro);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filtro-pelicula {
+  background-color: white;
+  padding: 24px;
+  border-radius: var(--radio);
+  box-shadow: 0 2px 8px var(--sombra);
+  margin-bottom: 32px;
+  transition: box-shadow 0.3s ease;
+}
+
+.filtro-pelicula:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filtro-pelicula h3 {
+  font-size: 1.2em;
+  color: var(--azul);
+  margin-bottom: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.grupo-filtro {
+  margin-bottom: 20px;
+}
+
+.grupo-filtro label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 0.95em;
+  color: var(--texto);
+}
+
+.grupo-filtro select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.95em;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background-color: var(--fondo);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grupo-filtro select:focus {
+  outline: none;
+  border-color: var(--azul);
+  box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.2);
+}
+

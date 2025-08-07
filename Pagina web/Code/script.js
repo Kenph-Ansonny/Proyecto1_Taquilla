@@ -103,7 +103,13 @@ function renderPeliculas(filtradas) {
     const card = document.createElement('div');
     card.className = 'pelicula-card';
     card.innerHTML = `
-      <img class="pelicula-img" src="${p.imagen}" alt="${p.nombre}">
+      <div class="pelicula-overlay">
+        <img class="pelicula-img" src="${p.imagen}" alt="${p.nombre}">
+        <div class="pelicula-actions">
+          <a href="./sinopsis.html?pelicula=${encodeURIComponent(p.nombre)}" class="btn-sinopsis">📖 Ver sinopsis</a>
+          <a href="./boletos.html?pelicula=${encodeURIComponent(p.nombre)}" class="btn-boletos">🎟️ Comprar boletos</a>
+        </div>
+      </div>
     `;
     grid.appendChild(card);
   });

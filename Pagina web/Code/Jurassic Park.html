@@ -1,92 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="./Pelicula info.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jurassic Park | Cinépolis</title>
+  <link href="./Pelicula info.css" rel="stylesheet" />
 </head>
 <body>
 
-      <header>
-  <div class="logo">🎬 Cinépolis</div>
-
-  
-
+  <!-- 🎬 Encabezado -->
+  <header>
+    <div class="logo">🎬 Cinépolis</div>
     <nav class="nav-right">
       <a href="vista clientes.html" class="menu-btn">Inicio</a>
       <a href="cartelera.html" class="menu-btn">Cartelera</a>
-      <button class="login-btn">👤 Ingresar</button>
     </nav>
-  </div>
-</header>
+  </header>
 
-
-
-
-
-
-        
-          <div class="container">
-
-          <div class="categorias">
-            <h2>Acción </h2>
-            <h2>Aventura </h2>
-            <h2>Fantasía </h2>
-            <h2>Familiar </h2>
-            
-            </div>
-               <img src="./Sources/jurassic-world-rebirth-646x1024.jpg" width="900rem"   height="500px" >
-            <div class="pconatiner">
-
-              
-
-
-             
-              <h1>Jurassic Park</h1>
-              <p>Un equipo liderado por Zora Bennett viaja a una isla equatorial donde sobreviven colosales dinosaurios. Su misión: recolectar muestras genéticas valiosas para un fármaco contra enfermedades cardíacas. En el camino rescatan a una familia náufraga y juntos luchan por sobrevivir en un entorno impredecible e implacable. </p>
-                <h2>Actores</h2>
-
-                <ul>
-
-                  <li>Scarlett Johansson </li>
-                  <li>Mahershala Ali</li>
-                  <li>Jonathan Bailey</li>
-                  <li>Rupert Friend </li>
-                  <li>	Manuel García Rulfo</li>
-                </ul>
-                
-
-
-                <h2>Directores</h2>
-
-                <ul>
-
-                  <li>Gareth Edwards</li>
-                  <li>David Koepp</li>
-
-                </ul>
-                
-
-        
-
-                <video src="./Videos/Jurassic World Renace Tráiler Oficial – HD.mp4" 
-                width="700" height="400" controls></video>
-
-            </div>
-
-
-                
-          </div>
+  <!-- 🎥 Contenido principal -->
+  <main class="pelicula-layout">
     
+    <!-- 🎥 Información de la película -->
+    <section class="pelicula-info">
+      <div class="pelicula-top">
+        <img src="./Sources/jurassic-world-rebirth-646x1024.jpg" alt="Jurassic Park póster" width="900" height="500" class="pelicula-img" />
 
-          
-           <footer>
+        <div class="pelicula-detalles">
+          <h1>Jurassic Park</h1>
+          <p class="clasificacion">🎯 Género: Accion</p>
+          <p class="duracion">⏱️ Duración: 134 minutos</p>
+        </div>
+      </div>      
+        <p>
+          Un equipo liderado por Zora Bennett viaja a una isla ecuatorial donde sobreviven colosales dinosaurios. Su misión: recolectar muestras genéticas valiosas para un fármaco contra enfermedades cardíacas. En el camino rescatan a una familia náufraga y juntos luchan por sobrevivir en un entorno impredecible e implacable.
+        </p>
+      <h2>Actores</h2>
+        <ul>
+          <li>Scarlett Johansson</li>
+          <li>Mahershala Ali</li>
+          <li>Jonathan Bailey</li>
+          <li>Rupert Friend</li>
+          <li>Manuel García Rulfo</li>
+        </ul>
+
+        <h2>Directores</h2>
+        <ul>
+          <li>Gareth Edwards</li>
+          <li>David Koepp</li>
+        </ul>
+    </section>
+
+    <!-- 🕒 Horarios disponibles -->
+    <aside class="horarios-section">
+      <h2>Horarios disponibles</h2>
+
+      <div class="horario-complejo">
+        <h3>Cinépolis Cayalá</h3>
+        <div class="horario-botones">
+          <button>13:25</button>
+          <button>16:10</button>
+        </div>
+      </div>
+
+      <div class="horario-complejo">
+        <h3>Cinépolis Galerías Miraflores</h3>
+        <div class="horario-botones">
+          <button>14:25</button>
+          <button>17:25</button>
+        </div>
+      </div>
+
+      <div class="horario-complejo">
+        <h3>Cinépolis Oakland Mall</h3>
+        <div class="horario-botones">
+          <button>14:05</button>
+        </div>
+      </div>
+
+      <!-- 🎞️ Tráiler -->
+      <div class="trailer-subsection">
+        <h2>Tráiler</h2>
+        <video controls width="100%">
+          <source src="Videos\Jurassic World Renace Tráiler Oficial – HD.mp4" type="video/mp4" />
+          Tu navegador no soporta la reproducción de video.
+        </video>
+      </div>
+    </aside>
+  </main>
+
+  <!-- 📜 Footer -->
+  <footer>
     <p>© Cinépolis | Todos los derechos reservados</p>
   </footer>
-          
 
-
-<script src="./Pelicula Info.js"></script>
+  <script src="./Pelicula info.js"></script>
 </body>
 </html>

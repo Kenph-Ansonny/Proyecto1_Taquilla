@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paso 1: Boletos | Cinépolis</title>
+  <link rel="stylesheet" href="boletos.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">🎬 Cinépolis</div>
+    <nav class="nav-right">
+      <a href="./vista clientes.html" class="menu-btn">Inicio</a>
+      <a href="./Cartelera.html" class="menu-btn">Cartelera</a>
+    </nav>
+  </header>
+
+  <nav class="pasos-compra" aria-label="Pasos de compra">
+  <ul class="barra-pasos">
+    <li class="paso activo">
+      <span class="icono">🎟️</span>
+      <span class="texto">Boletos</span>
+    </li>
+    <li class="paso">
+      <span class="icono">🪑</span>
+      <span class="texto">Asientos</span>
+    </li>
+    <li class="paso">
+      <span class="icono">💳</span>
+      <span class="texto">Pago</span>
+    </li>
+  </ul>
+</nav>
+
+  <main class="contenedor-boletos">
+    <!-- 🎟️ Paso 1: Selección de boletos -->
+    <section class="seleccion-boletos">
+      <h2>Selecciona tus Boletos</h2>
+      <p class="limite">Máximo 10 boletos por transacción</p>
+
+      <!-- 🎬 Selección de complejo y película -->
+      <div class="filtro-pelicula">
+  <h3>🎬 Selección de Cine y Película</h3>
+
+  <div class="grupo-filtro">
+    <label for="complejo">Complejo:</label>
+    <select id="complejo" required>
+      <option value="">Selecciona un complejo</option>
+      <option value="Cinépolis Cayalá">Cinépolis Cayalá</option>
+      <option value="Cinépolis Portales">Cinépolis Portales</option>
+      <option value="Cinépolis Oakland Mall">Cinépolis Oakland Mall</option>
+      <option value="Cinépolis El Frutal">Cinépolis El Frutal</option>
+    </select>
+  </div>
+
+  <div class="grupo-filtro">
+    <label for="pelicula">Película:</label>
+    <select id="pelicula" disabled required>
+      <option value="">Selecciona una película</option>
+    </select>
+  </div>
+</div>
+
+
+      <!-- 🎫 Tipos de boletos -->
+      <div class="categoria" data-precio="45" data-tipo="Adulto">
+        <span class="tipo">ADULTO - Q45</span>
+        <div class="contador">
+          <button class="menos">−</button>
+          <input type="number" value="0" min="0" max="10" readonly />
+          <button class="mas">+</button>
+        </div>
+      </div>
+
+      <div class="categoria" data-precio="38" data-tipo="3ra Edad">
+        <span class="tipo">3 ERA EDAD - Q38</span>
+        <div class="contador">
+          <button class="menos">−</button>
+          <input type="number" value="0" min="0" max="10" readonly />
+          <button class="mas">+</button>
+        </div>
+      </div>
+
+      <div class="categoria" data-precio="45" data-tipo="Duo Visa">
+        <span class="tipo">DUO TICKETS VISA - Q45</span>
+        <div class="contador">
+          <button class="menos">−</button>
+          <input type="number" value="0" min="0" max="10" readonly />
+          <button class="mas">+</button>
+        </div>
+      </div>
+
+      <button class="btn-continuar" disabled>CONTINUAR</button>
+    </section>
+
+    <!-- 🪑 Paso 2: Selección de asientos -->
+    <section class="seleccion-asientos">
+      <h2>Selecciona tus Asientos</h2>
+      <p>Haz clic en los asientos disponibles para seleccionarlos.</p>
+      <div class="pantalla-cine">PANTALLA</div>
+      <div class="mapa-asientos" id="mapaAsientos"></div>
+
+      <div class="resumen">
+        <h3>Resumen de selección</h3>
+        <p>Boletos seleccionados: <span id="contador">0</span> / <span id="maximo">10</span></p>
+        <ul id="listaAsientos"></ul>
+      </div>
+
+      <button class="btn-continuar-asientos">CONTINUAR AL PAGO</button>
+    </section>
+
+   <!-- 💳 Paso 3: Información de pago -->
+<section class="seleccion-pago">
+  <h2>Información de Pago</h2>
+  <p>Completa los datos para finalizar tu compra.</p>
+
+  <form class="formulario-pago">
+    <!-- 🧍 Datos personales -->
+    <div class="fila-doble">
+      <label>
+        Nombre(s)*:
+        <input type="text" name="nombres" required />
+      </label>
+      <label>
+        Apellidos*:
+        <input type="text" name="apellidos" required />
+      </label>
+    </div>
+
+    <div class="fila-doble">
+      <label>
+        Correo electrónico*:
+        <input type="email" name="correo" required />
+      </label>
+      <label>
+        Tarjeta Club Cinépolis®:
+        <input type="text" name="club" placeholder="Opcional" />
+      </label>
+    </div>
+
+    <!-- 💳 Método de pago -->
+    <fieldset class="metodo-pago">
+      <legend>Método de pago*</legend>
+      <label>
+        <input type="radio" name="metodo" value="tarjeta" checked />
+        Tarjeta crédito / débito
+      </label>
+    </fieldset>
+
+    <!-- 💳 Datos de tarjeta -->
+    <fieldset class="facturacion">
+      <legend>Opciones de facturación</legend>
+      <label>
+        <input type="radio" name="factura" value="final" checked />
+        Consumidor final
+      </label>
+      <label>
+        <input type="radio" name="factura" value="datos" />
+        Agregar mis datos
+      </label>
+    </fieldset>
+
+    <!-- 🧾 Datos de facturación (ocultos por defecto) -->
+    <div class="datos-factura" style="display: none;">
+      <label>
+        Nombre o Razón Social*:
+        <input type="text" name="razon" required />
+      </label>
+      <label>
+        NIT*:
+        <input type="text" name="nit" required />
+      </label>
+    </div>
+
+    <button type="submit" class="btn-finalizar">FINALIZAR COMPRA</button>
+  </form>
+</section>
+
+    <!-- FACTURA (oculta por defecto) -->
+<div class="factura" style="display: none;">
+  <div class="factura-contenido">
+    <div class="factura-header">
+      <div class="factura-logo">
+        <span class="logo-icon">🎬</span>
+        <span class="logo-text">Cinépolis</span>
+      </div>
+      <div class="factura-title">Factura Electrónica</div>
+    </div>
+    <div class="factura-info">
+      <div><strong>Fecha:</strong> <span id="fechaFactura"></span></div>
+      <div><strong>Nombre:</strong> <span id="nombreCliente"></span> <span id="apellidoCliente"></span></div>
+      <div><strong>Correo:</strong> <span id="correoCliente"></span></div>
+      <div><strong>NIT:</strong> <span id="nitCliente"></span></div>
+    </div>
+    <div class="factura-section">
+      <h3>Boletos comprados</h3>
+      <table class="tabla-boletos">
+        <thead>
+          <tr>
+            <th>Cantidad</th>
+            <th>Tipo</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="tablaBoletosFactura"></tbody>
+      </table>
+    </div>
+    <div class="factura-total">
+      <span>Total:</span>
+      <span id="totalFactura"></span>
+    </div>
+    <div class="factura-footer">
+      <div class="factura-gracias">¡Gracias por su compra en Cinépolis!</div>
+      <div class="factura-nota">Esta factura es válida como documento tributario.</div>
+    </div>
+  </div>
+</div>
+
+    <!-- 🧾 Resumen lateral -->
+    <aside class="resumen-compra">
+      <div class="resumen-header">
+        <h3>Resumen de compra</h3>
+        <button class="cerrar-resumen">✕</button>
+      </div>
+
+      <div class="resumen-contenido">
+        <img src="" alt="Poster de la película" class="poster-pelicula" />
+        <div class="info-pelicula"></div>
+        <div class="lista-asientos-final"></div>
+      </div>
+
+      <p class="nota-servicio">* Se realizará un cargo por servicio de Q5 en cada boleto dentro de la orden.</p>
+
+      <div class="total-compra">
+        <p><strong>Total (IVA incluido):</strong></p>
+        <p class="monto-total">Q0</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <p>© Cinépolis | Todos los derechos reservados</p>
+  </footer>
+
+  <script src="boletos.js"></script>
+
+  <!-- --- Factura bonita --- -->
+<style>
+.factura {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9fafc;
+  padding: 0;
+  max-width: 420px;
+  margin: 2.5rem auto;
+  border-radius: 14px;
+  border: 1.5px solid #e0e3e8;
+  box-shadow: 0 4px 24px rgba(30, 60, 120, 0.13);
+  color: #222b45;
+  overflow: hidden;
+}
+.factura-contenido {
+  padding: 0;
+}
+.factura-header {
+  background: linear-gradient(90deg, #1a237e 60%, #3949ab 100%);
+  color: #fff;
+  padding: 1.2rem 2rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.factura-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+.logo-icon {
+  font-size: 1.7rem;
+  margin-right: 0.5rem;
+}
+.logo-text {
+  letter-spacing: 1px;
+}
+.factura-title {
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-top: 0.2rem;
+}
+.factura-info {
+  background: #f1f3f6;
+  padding: 1.1rem 2rem 0.7rem 2rem;
+  border-bottom: 1px solid #e0e3e8;
+  font-size: 1rem;
+}
+.factura-info div {
+  margin-bottom: 0.3rem;
+}
+.factura-section {
+  padding: 1.2rem 2rem 0.5rem 2rem;
+}
+.factura-section h3 {
+  margin: 0 0 0.7rem 0;
+  font-size: 1.08rem;
+  color: #1a237e;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+.tabla-boletos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.5rem;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(60,80,120,0.04);
+}
+.tabla-boletos th,
+.tabla-boletos td {
+  border: 1px solid #e0e3e8;
+  padding: 0.55rem 0.3rem;
+  text-align: center;
+  font-size: 0.98rem;
+}
+.tabla-boletos th {
+  background: #e3e6f3;
+  color: #1a237e;
+  font-weight: 600;
+}
+.tabla-boletos td {
+  background: #f7f8fa;
+}
+.factura-total {
+  background: #f1f3f6;
+  padding: 0.9rem 2rem 0.9rem 2rem;
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #1a237e;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1.5px solid #e0e3e8;
+  border-bottom: 1.5px solid #e0e3e8;
+}
+.factura-footer {
+  padding: 1.1rem 2rem 1.2rem 2rem;
+  text-align: center;
+  background: #fff;
+}
+.factura-gracias {
+  color: #388e3c;
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.factura-nota {
+  color: #607d8b;
+  font-size: 0.93rem;
+  font-style: italic;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .factura, .factura * {
+    visibility: visible;
+  }
+  .factura {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .factura-header, .factura-info, .factura-section, .factura-total, .factura-footer {
+    padding-left: 1.5cm !important;
+    padding-right: 1.5cm !important;
+  }
+}
+</style>
+</body>
+</html>

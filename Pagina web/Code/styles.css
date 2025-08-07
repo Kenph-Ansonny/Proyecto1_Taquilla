@@ -266,3 +266,62 @@ footer {
   padding: 0;
   cursor: pointer;
 }
+.pelicula-card {
+  position: relative;
+  width: 200px;
+  margin: 10px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.pelicula-overlay {
+  position: relative;
+  transition: filter 0.3s ease;
+}
+
+.pelicula-img {
+  width: 100%;
+  display: block;
+  transition: filter 0.3s ease;
+  border-radius: 8px;
+}
+
+.pelicula-overlay:hover .pelicula-img {
+  filter: brightness(60%);
+}
+
+.pelicula-actions {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.pelicula-overlay:hover .pelicula-actions {
+  display: flex;
+}
+
+.pelicula-actions a {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 4px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.75em;
+  white-space: nowrap;
+  max-width: 140px;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+
+.pelicula-actions a:hover {
+  background-color: #ffd700;
+  color: #000;
+}
+

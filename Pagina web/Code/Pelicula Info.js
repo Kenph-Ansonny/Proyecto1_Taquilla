@@ -1,41 +1,42 @@
 const modal = document.getElementById('modalLogin');
 const openBtn = document.querySelector('.login-btn');
 const closeBtn = document.querySelector('.close');
+ document.addEventListener("DOMContentLoaded", () => {
+  const horarios = {
+    cayala: ["13:25", "16:10"],
+    miraflores: ["14:25", "17:25"],
+    oakland: ["14:05"]
+  };
 
-openBtn.addEventListener('click', () => {
-  modal.style.display = 'block';
-});
-closeBtn.addEventListener('click', () => {
-  modal.style.display = 'none';
-});
-window.addEventListener('click', e => {
-  if (e.target === modal) modal.style.display = 'none';
-});
+  const complejoSelect = document.getElementById("complejo");
+  const resultados = document.querySelector(".horarios-resultados");
 
- document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault(); // ¡Importante! Evita el envío tradicional del formulario
+  function mostrarHorarios() {
+    const complejo = complejoSelect.value;
+    const funciones = horarios[complejo] || [];
 
-  const nombre_usuario = document.getElementById('usuarioInput').value;
-  const contrasena = document.getElementById('contrasenaInput').value;
+    resultados.innerHTML = "";
 
-  try {
-    const response = await fetch("http://localhost:3001/api/Ingreso", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-       body: JSON.stringify({ nombre_usuario, contrasena })
+    const contenedor = document.createElement("div");
+    contenedor.classList.add("horario-complejo");
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = `Horarios disponibles en ${complejoSelect.options[complejoSelect.selectedIndex].text}`;
+    contenedor.appendChild(titulo);
+
+    const botones = document.createElement("div");
+    botones.classList.add("horario-botones");
+
+    funciones.forEach(hora => {
+      const btn = document.createElement("button");
+      btn.textContent = hora;
+      botones.appendChild(btn);
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      alert("✅ " + data.mensaje);
-    } else {
-      const error = await response.json();
-      alert("❌ Error: " + (error.error || "No autorizado"));
-    }
-  } catch (error) {
-    console.error("Error al intentar iniciar sesión:", error);
-    alert("🚫 Error de red o servidor no disponible");
+    contenedor.appendChild(botones);
+    resultados.appendChild(contenedor);
   }
+
+  complejoSelect.addEventListener("change", mostrarHorarios);
+  mostrarHorarios(); // Mostrar al cargar
 });

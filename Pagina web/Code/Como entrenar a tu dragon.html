@@ -1,92 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="./Pelicula info.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cómo entrenar a tu Dragón | Cinépolis</title>
+  <link href="./Pelicula info.css" rel="stylesheet" />
 </head>
 <body>
 
-      <header>
-  <div class="logo">🎬 Cinépolis</div>
-
-  
-
+  <!-- 🎬 Encabezado -->
+  <header>
+    <div class="logo">🎬 Cinépolis</div>
     <nav class="nav-right">
       <a href="vista clientes.html" class="menu-btn">Inicio</a>
       <a href="cartelera.html" class="menu-btn">Cartelera</a>
-      <button class="login-btn">👤 Ingresar</button>
     </nav>
-  </div>
-</header>
+  </header>
 
-
-
-
-
-
-        
-          <div class="container">
-
-          <div class="categorias">
-            <h2>Acción </h2>
-            <h2>Aventura </h2>
-            <h2>Fantasía </h2>
-            <h2>Familiar </h2>
-            
-            </div>
-               <img src="./Sources/como entrenar a tu dragn.jpg" width="900rem"   height="500px" >
-            <div class="pconatiner">
-
-              
-
-
-             
-              <h1>Como entrenar a tu Dragon</h1>
-              <p> En la escarpada isla de Berk, vikingos y dragones han estado en guerra durante generaciones. Hipo, el ingenioso y menospreciado hijo del jefe Estoico el Vasto, desafía las tradiciones al entablar una amistad con Desdentao, un dragón Furia Nocturna temido por todos. Junto a Astrid y el peculiar herrero Bocón, Hipo cuestionará las creencias de su pueblo cuando una amenaza ancestral ponga en peligro tanto a dragones como vikingos. Su vínculo será clave para forjar una nueva era de entendimiento, confianza y esperanza compartida </p>
-                <h2>Actores</h2>
-
-                <ul>
-
-                  <li>Mason Thames</li>
-                  <li>Nico Parker</li>
-                  <li>Gerard Butler</li>
-                  <li>Nick Frost </li>
-                  <li>	Julian Dennison</li>
-                </ul>
-                
-
-
-                <h2>Directores</h2>
-
-                <ul>
-
-                  <li>Dean DeBlois</li>
-                  <li>Marc Platt</li>
-
-                </ul>
-                
-
-        
-
-                <video src="./Videos/CÓMO ENTRENAR A TU DRAGÓN Tráiler 2 Español Latino (2025)(2).mp4" 
-                width="700" height="400" controls></video>
-
-            </div>
-
-
-                
-          </div>
+  <!-- 🎥 Contenido principal + 🕒 Horarios + 🎞️ Tráiler -->
+  <main class="pelicula-layout">
     
+    <!-- 🎥 Información de la película -->
+    <section class="pelicula-info">
+      <div class="pelicula-top">
+        <img src="./Sources/como entrenar a tu dragn.jpg" alt="Cómo entrenar a tu dragón" class="pelicula-img" />
 
-          
-           <footer>
+        <div class="pelicula-detalles">
+          <h1>Cómo entrenar a tu Dragón</h1>
+          <p class="clasificacion">🎯 Género: Aventura</p>
+          <p class="duracion">⏱️ Duración: 126 minutos</p>
+        </div>
+      </div>
+
+      <p>
+        En la isla de Berk, donde los vikingos y los dragones han sido enemigos por generaciones, Hipo se distingue. El ingenioso, pero olvidado, hijo del Jefe Estoico el Vasto (Gerard Butler, reemplazando su personaje al que le dio voz en la franquicia animada), Hipo desafía siglos de tradición cuando hace amistad con Chimuelo, el temido dragón Furia Nocturna. Su vínculo revela las verdaderas naturalezas de los dragones, retando las creencias de su tribu y salvando a ambos mundos.
+      </p>
+
+      <h2>Actores</h2>
+      <ul>
+        <li>Mason Thames</li>
+        <li>Nico Parker</li>
+        <li>Gerard Butler</li>
+        <li>Nick Frost</li>
+        <li>Julian Dennison</li>
+      </ul>
+
+      <h2>Directores</h2>
+      <ul>
+        <li>Dean DeBlois</li>
+        <li>Marc Platt</li>
+      </ul>
+    </section>
+
+    <!-- 🕒 Horarios disponibles -->
+    <aside class="horarios-section">
+  <h2>Horarios disponibles</h2>
+
+  <div class="horario-complejo">
+    <h3>Cinépolis Cayalá</h3>
+    <div class="horario-botones">
+      <button>13:25</button>
+      <button>16:10</button>
+    </div>
+  </div>
+
+  <div class="horario-complejo">
+    <h3>Cinépolis Galerías Miraflores</h3>
+    <div class="horario-botones">
+      <button>14:25</button>
+      <button>17:25</button>
+    </div>
+  </div>
+
+  <div class="horario-complejo">
+    <h3>Cinépolis Oakland Mall</h3>
+    <div class="horario-botones">
+      <button>14:05</button>
+    </div>
+  </div>
+
+  <!-- 🎞️ Tráiler dentro de horarios -->
+  <div class="trailer-subsection">
+  <h2>Tráiler</h2>
+  <video controls>
+    <source src="./Videos/CÓMO ENTRENAR A TU DRAGÓN Tráiler 2 Español Latino (2025)(2).mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de video.
+  </video>
+</div>
+</aside>
+  </main>
+
+  <!-- 📜 Footer -->
+  <footer>
     <p>© Cinépolis | Todos los derechos reservados</p>
   </footer>
-          
 
-
-<script src="./Pelicula Info.js"></script>
+  <script src="./Pelicula Info.js"></script>
 </body>
 </html>
+     
