@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ status: "API funcionando" });
 });
 
-// === Ruta de ingreso ===
+
 app.post("/api/Ingreso", async (req, res) => {
   const { nombre_usuario, contrasena } = req.body;
   console.log("Datos recibidos:", req.body);
